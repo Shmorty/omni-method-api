@@ -82,7 +82,7 @@ functions:
     handler: src/handlers.getUser
     events:
       - httpApi:
-          path: /users/{id}}
+          path: /users/{id}
           method: get
 
 #    The following are a few example events you can configure
