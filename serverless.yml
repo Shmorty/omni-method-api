@@ -84,6 +84,12 @@ functions:
       - httpApi:
           path: /users/{id}
           method: get
+  addScore:
+    handler: src/handlers.addScore
+    events:
+      - httpApi:
+          path: /users/{id}/scores
+          method: post
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

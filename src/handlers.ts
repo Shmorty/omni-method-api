@@ -53,3 +53,29 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
     body: JSON.stringify(output.Item),
   };
 };
+
+export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const id = event.pathParameters?.id;
+  const reqBody = JSON.parse(event.body as string);
+  const assessmentId = reqBody.assessmentId;
+  const today = new Date().toLocaleDateString(undefined, {});
+  const newScore = {
+    ...reqBody,
+    scoreDate: today,
+  };
+  await docClient
+    .put({
+      TableName: tableName,
+      Item: {
+        ...newScore,
+        PK: `USER#${id}`,
+        SK: `SCORE#${assessmentId}#${today}`,
+      },
+    })
+    .promise();
+
+  return {
+    statusCode: 201,
+    body: JSON.stringify(newScore),
+  };
+};
