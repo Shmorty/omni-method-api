@@ -1,15 +1,7 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
 #
 # For full config options, check the docs:
 #    docs.serverless.com
 #
-# Happy Coding!
 
 service: omni-method-api
 # app and org for use with dashboard.serverless.com
@@ -52,16 +44,19 @@ provider:
       statements:
         - Effect: Allow
           Action:
-            - "dynamodb:PutItem"
+            # - "dynamodb:BatchGetItem"
+            # - "dynamodb:ConditionCheckItem"
             - "dynamodb:GetItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:Query"
+            - "dynamodb:UpdateItem"
             - "dynamodb:DeleteItem"
             - "dynamodb:Scan"
           Resource:
             - { "Fn::GetAtt": ["OmniMethodTable", "Arn"] }
 
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
+  environment:
+    TABLE_NAME: { Ref: OmniMethodTable }
 
 # you can add packaging information here
 #package:
@@ -73,22 +68,41 @@ provider:
 
 functions:
   addUser:
-    handler: src/handlers.addUser
+    # handler: src/handlers.addUser
+    handler: src/handlers/users.addUser
     events:
       - httpApi:
           path: /users
           method: post
   getUser:
-    handler: src/handlers.getUser
+    handler: src/handlers/users.getUser
     events:
       - httpApi:
           path: /users/{id}
           method: get
   addScore:
-    handler: src/handlers.addScore
+    handler: src/handlers/users.addScore
     events:
       - httpApi:
           path: /users/{id}/scores
+          method: post
+  addCategory:
+    handler: src/handlers/assessments.addCategory
+    events:
+      - httpApi:
+          path: /assessments/categories
+          method: post
+  getAssessments:
+    handler: src/handlers/assessments.getAssessments
+    events:
+      - httpApi:
+          path: /assessments
+          method: get
+  addAssessment:
+    handler: src/handlers/assessments.addAssessment
+    events:
+      - httpApi:
+          path: /assessments
           method: post
 
 #    The following are a few example events you can configure
@@ -133,33 +147,38 @@ functions:
 
 plugins:
   - serverless-plugin-typescript
-# you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+  # - serverless-offline
+
 resources:
   Resources:
     OmniMethodTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: OmniMethodTable
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        BillingMode: "PAY_PER_REQUEST"
+        # ProvisionedThroughput:
+        #   ReadCapacityUnits: 0
+        #   WriteCapacityUnits: 0
         AttributeDefinitions:
           - AttributeName: PK
             AttributeType: S
           - AttributeName: SK
             AttributeType: S
+          # - AttributeName: "GSI1PK"
+          #   AttributeType: "S"
+          # - AttributeName: "GSI1SK"
+          #   AttributeType: "S"
         KeySchema:
           - AttributeName: PK
             KeyType: HASH
           - AttributeName: SK
             KeyType: RANGE
+        # GlobalSecondaryIndexes:
+        #   - IndexName: "GSI1"
+        #     KeySchema:
+        #       - AttributeName: "GSI1PK"
+        #         KeyType: "HASH"
+        #       - AttributeName: "GSI1SK"
+        #         KeyType: "RANGE"
+        #     Projection:
+        #       ProjectionType: ALL

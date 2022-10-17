@@ -1,6 +1,18 @@
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from "aws-lambda";
 import AWS from "aws-sdk";
 import { ulid } from "ulid";
+
+// export const main: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+//   const reqBody = JSON.parse(event.body as string);
+//   const newUser = {
+//     ...reqBody,
+//   };
+//   await addUser(newUser);
+//   return {
+//     statusCode: 201,
+//     body: JSON.stringify(newUser),
+//   };
+// };
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 const tableName = "OmniMethodTable";
@@ -20,6 +32,7 @@ export const addUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         PK: `USER#${userId}`,
         SK: `#METADATA#${userId}`,
       },
+      ConditionExpression: "attribute_not_exists(PK)",
     })
     .promise();
 
