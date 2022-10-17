@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "077f3a4a-8f01-40cb-a56f-ebd3fb2a4eeb",
+    "colName": "OmniMethod",
+    "created": "2022-10-17T23:32:46.884Z",
+    "sortNum": 10000,
+    "folders": [],
+    "settings": {
+      "headers": [],
+      "tests": [],
+      "options": {
+        "baseUrl": "https://gneknc64ba.execute-api.us-east-1.amazonaws.com"
+      }
+    }
+  }
+]
