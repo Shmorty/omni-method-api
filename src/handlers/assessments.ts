@@ -56,14 +56,40 @@ export const addAssessment = async (event: APIGatewayProxyEvent): Promise<APIGat
   };
 };
 
-export const getAssessments = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+export const getCategories = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const output = await docClient
-    .scan({
+    .query({
       TableName: tableName,
       ConsistentRead: false,
-      FilterExpression: "begins_with (PK, :prefix)",
+      KeyConditionExpression: "PK = :key and begins_with (SK, :prefix)",
       ExpressionAttributeValues: {
+        ":key": "META",
         ":prefix": "CAT#",
+      },
+    })
+    .promise();
+
+  if (!output) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ error: "not found" }),
+    };
+  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify(output),
+  };
+};
+
+export const getAssessments = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const output = await docClient
+    .query({
+      TableName: tableName,
+      ConsistentRead: false,
+      KeyConditionExpression: "PK = :key and begins_with (SK, :prefix)",
+      ExpressionAttributeValues: {
+        ":key": "META",
+        ":prefix": "ASMT#",
       },
     })
     .promise();

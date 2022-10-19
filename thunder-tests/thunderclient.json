@@ -50,5 +50,19 @@
       "form": []
     },
     "tests": []
+  },
+  {
+    "_id": "fdeeea4a-92e4-48ae-9361-dd68797b9b40",
+    "colId": "077f3a4a-8f01-40cb-a56f-ebd3fb2a4eeb",
+    "containerId": "",
+    "name": "getCategories",
+    "url": "/categories",
+    "method": "GET",
+    "sortNum": 25000,
+    "created": "2022-10-19T03:27:10.384Z",
+    "modified": "2022-10-19T03:27:44.482Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

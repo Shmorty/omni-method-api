@@ -92,6 +92,12 @@ functions:
       - httpApi:
           path: /assessments/categories
           method: post
+  getCategories:
+    handler: src/handlers/assessments.getCategories
+    events:
+      - httpApi:
+          path: /categories
+          method: get
   getAssessments:
     handler: src/handlers/assessments.getAssessments
     events:
