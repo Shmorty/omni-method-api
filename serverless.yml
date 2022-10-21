@@ -98,6 +98,7 @@ functions:
       - httpApi:
           path: /categories
           method: get
+          cors: true
   getAssessments:
     handler: src/handlers/assessments.getAssessments
     events:

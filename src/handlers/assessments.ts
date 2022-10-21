@@ -77,6 +77,10 @@ export const getCategories = async (event: APIGatewayProxyEvent): Promise<APIGat
   }
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
     body: JSON.stringify(output),
   };
 };
@@ -102,6 +106,10 @@ export const getAssessments = async (event: APIGatewayProxyEvent): Promise<APIGa
   }
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
     body: JSON.stringify(output),
   };
 };
