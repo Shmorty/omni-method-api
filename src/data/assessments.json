@@ -120,13 +120,13 @@
     {
       "cid": "FLEX",
       "aid": "14",
-      "icon": "/assets/images/middle-split.png",
+      "icon": "/assets/images/toe-touch.png",
       "label": "Posterior"
     },
     {
       "cid": "FLEX",
       "aid": 15,
-      "icon": "/assets/images/toe-touch.png",
+      "icon": "/assets/images/middle-split.png",
       "label": "Anterior"
     },
     {
