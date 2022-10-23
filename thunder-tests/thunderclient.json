@@ -78,5 +78,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "bac06da4-a3eb-48dd-8d41-a0ed0305b268",
+    "colId": "077f3a4a-8f01-40cb-a56f-ebd3fb2a4eeb",
+    "containerId": "",
+    "name": "getScores",
+    "url": "/users/0001/scores",
+    "method": "GET",
+    "sortNum": 28750,
+    "created": "2022-10-23T21:48:49.223Z",
+    "modified": "2022-10-23T21:49:18.976Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]

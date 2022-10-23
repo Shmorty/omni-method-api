@@ -63,7 +63,42 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
   return {
     statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
     body: JSON.stringify(output.Item),
+  };
+};
+
+export const getScores = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const id = event.pathParameters?.id;
+
+  const output = await docClient
+    .query({
+      TableName: tableName,
+      ConsistentRead: false,
+      KeyConditionExpression: "PK = :key and begins_with (SK, :prefix)",
+      ExpressionAttributeValues: {
+        ":key": `USER#${id}`,
+        ":prefix": "SCORE#",
+      },
+    })
+    .promise();
+
+  if (!output) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ id: `${id}`, error: "not found" }),
+    };
+  }
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify(output),
   };
 };
 

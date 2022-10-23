@@ -80,6 +80,12 @@ functions:
       - httpApi:
           path: /users/{id}
           method: get
+  getScores:
+    handler: src/handlers/users.getScores
+    events:
+      - httpApi:
+          path: /users/{id}/scores
+          method: get
   addScore:
     handler: src/handlers/users.addScore
     events:

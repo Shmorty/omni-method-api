@@ -2,16 +2,39 @@
   "users": [
     {
       "id": "0001",
-      "email": "fake@email.com",
-      "firstName": "Kyle",
-      "lastName": "Martel",
-      "nickname": "Kyle",
-      "dob": "1996-07-31",
+      "email": "jack@lalane.not",
+      "firstName": "Francois",
+      "lastName": "LaLanne",
+      "nickname": "Jack",
+      "dob": "1914-09-26",
       "height": {
-        "feet": 6,
-        "inches": 2
+        "feet": 5,
+        "inches": 6
       },
-      "weight": 180
+      "weight": 155
+    }
+  ],
+  "scores": [
+    {
+      "uid": "0001",
+      "aid": "DLFT",
+      "rawScore": 455,
+      "calculatedScore": 92,
+      "scoreDate": "20220901"
+    },
+    {
+      "uid": "0001",
+      "aid": "DLFT",
+      "rawScore": 420,
+      "calculatedScore": 90,
+      "scoreDate": "20220812"
+    },
+    {
+      "uid": "0001",
+      "aid": "DLFT",
+      "rawScore": 380,
+      "calculatedScore": 88,
+      "scoreDate": "20220730"
     }
   ]
 }

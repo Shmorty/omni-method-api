@@ -33,3 +33,22 @@ data.users.forEach((u) => {
   });
   //   console.log("user " + c.firstName);
 });
+
+data.scores.forEach((s) => {
+  let params = {
+    TableName: "OmniMethodTable",
+    Item: {
+      ...s,
+      PK: `USER#${s.uid}`,
+      SK: `SCORE#${s.aid}#${s.scoreDate}`,
+    },
+  };
+  docClient.put(params, function (err, data) {
+    if (err) {
+      console.log("Error", err);
+    } else {
+      console.log("Success", data);
+    }
+  });
+  //   console.log("user " + c.firstName);
+});
