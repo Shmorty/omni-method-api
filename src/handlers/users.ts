@@ -58,7 +58,7 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   if (!output.Item) {
     return {
       statusCode: 404,
-      body: JSON.stringify({ error: "not found" }),
+      body: JSON.stringify({ id: `${id}`, error: "not found" }),
     };
   }
   return {

@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "0001",
+      "email": "fake@email.com",
+      "firstName": "Kyle",
+      "lastName": "Martel",
+      "nickname": "Kyle",
+      "dob": "1996-07-31",
+      "height": {
+        "feet": 6,
+        "inches": 2
+      },
+      "weight": 180
+    }
+  ]
+}

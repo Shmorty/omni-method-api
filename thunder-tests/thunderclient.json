@@ -64,5 +64,19 @@
     "headers": [],
     "params": [],
     "tests": []
+  },
+  {
+    "_id": "0a830e5b-4f12-4d28-be5c-9909ece6ebf2",
+    "colId": "077f3a4a-8f01-40cb-a56f-ebd3fb2a4eeb",
+    "containerId": "",
+    "name": "getUser",
+    "url": "/users/0001",
+    "method": "GET",
+    "sortNum": 27500,
+    "created": "2022-10-22T19:03:52.794Z",
+    "modified": "2022-10-22T19:06:23.795Z",
+    "headers": [],
+    "params": [],
+    "tests": []
   }
 ]
