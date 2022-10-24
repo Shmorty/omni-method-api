@@ -31,7 +31,6 @@ data.users.forEach((u) => {
       console.log("Success", data);
     }
   });
-  //   console.log("user " + c.firstName);
 });
 
 data.scores.forEach((s) => {
@@ -50,5 +49,4 @@ data.scores.forEach((s) => {
       console.log("Success", data);
     }
   });
-  //   console.log("user " + c.firstName);
 });
