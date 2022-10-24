@@ -11,7 +11,8 @@
         "feet": 5,
         "inches": 6
       },
-      "weight": 155
+      "weight": 155,
+      "type": "user"
     }
   ],
   "scores": [
@@ -20,21 +21,24 @@
       "aid": "DLFT",
       "rawScore": 455,
       "calculatedScore": 92,
-      "scoreDate": "20220901"
+      "scoreDate": "20220901",
+      "type": "score"
     },
     {
       "uid": "0001",
       "aid": "DLFT",
       "rawScore": 420,
       "calculatedScore": 90,
-      "scoreDate": "20220812"
+      "scoreDate": "20220812",
+      "type": "score"
     },
     {
       "uid": "0001",
       "aid": "DLFT",
       "rawScore": 380,
       "calculatedScore": 88,
-      "scoreDate": "20220730"
+      "scoreDate": "20220730",
+      "type": "score"
     }
   ]
 }

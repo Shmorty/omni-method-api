@@ -75,13 +75,21 @@ export const getCategories = async (event: APIGatewayProxyEvent): Promise<APIGat
       body: JSON.stringify({ error: "not found" }),
     };
   }
+  // build response
+  var categories = new Array();
+  output.Items?.forEach((element) => {
+    delete element["PK"];
+    delete element["SK"];
+    categories.push(element);
+  });
+  // return data
   return {
     statusCode: 200,
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
-    body: JSON.stringify(output),
+    body: JSON.stringify({ categories: categories }),
   };
 };
 
@@ -104,12 +112,21 @@ export const getAssessments = async (event: APIGatewayProxyEvent): Promise<APIGa
       body: JSON.stringify({ error: "not found" }),
     };
   }
+  // build response
+  var assessments = new Array();
+  output.Items?.forEach((element) => {
+    delete element["PK"];
+    delete element["SK"];
+    assessments.push(element);
+  });
+  // return data
   return {
     statusCode: 200,
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
-    body: JSON.stringify(output),
+    body: JSON.stringify({ assessments: assessments }),
+    // body: JSON.stringify(output),
   };
 };

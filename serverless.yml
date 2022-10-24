@@ -74,8 +74,8 @@ functions:
       - httpApi:
           path: /users
           method: post
-  getUser:
-    handler: src/handlers/users.getUser
+  getUserScores:
+    handler: src/handlers/users.getUserScores
     events:
       - httpApi:
           path: /users/{id}

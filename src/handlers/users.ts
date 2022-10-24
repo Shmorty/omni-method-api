@@ -102,6 +102,51 @@ export const getScores = async (event: APIGatewayProxyEvent): Promise<APIGateway
   };
 };
 
+export const getUserScores = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const id = event.pathParameters?.id;
+  // read database
+  const output = await docClient
+    .query({
+      TableName: tableName,
+      ConsistentRead: false,
+      KeyConditionExpression: "PK = :key",
+      ExpressionAttributeValues: {
+        ":key": `USER#${id}`,
+      },
+    })
+    .promise();
+
+  if (!output) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({ id: `${id}`, error: "not found" }),
+    };
+  }
+  // build response
+  var user = {};
+  var scores = new Array();
+  output.Items?.forEach((element) => {
+    delete element["PK"];
+    delete element["SK"];
+    if (element.type == "user") {
+      delete element["type"];
+      user = element;
+    } else if (element.type === "score") {
+      delete element["type"];
+      scores.push(element);
+    }
+  });
+  // send response
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+    body: JSON.stringify({ user: user, scores: scores }),
+  };
+};
+
 export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const id = event.pathParameters?.id;
   const reqBody = JSON.parse(event.body as string);
