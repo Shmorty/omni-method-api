@@ -3,7 +3,7 @@
     {
       "id": "0001",
       "email": "jack@lalane.not",
-      "firstName": "Francois",
+      "firstName": "Jack",
       "lastName": "LaLanne",
       "nickname": "Jack",
       "dob": "1914-09-26",
@@ -38,6 +38,14 @@
       "rawScore": 380,
       "calculatedScore": 88,
       "scoreDate": "2022-07-30",
+      "type": "score"
+    },
+    {
+      "uid": "0001",
+      "aid": "BKSQ",
+      "rawScore": 375,
+      "calculatedScore": 455,
+      "scoreDate": "2022-08-15",
       "type": "score"
     }
   ]
