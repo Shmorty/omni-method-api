@@ -154,7 +154,8 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
   const today = new Date().toLocaleDateString(undefined, {});
   const newScore = {
     ...reqBody,
-    scoreDate: today,
+    calculatedScore: reqBody.rawScore * 2,
+    // scoreDate: today,
   };
   await docClient
     .put({
@@ -169,6 +170,11 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
 
   return {
     statusCode: 201,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Methods": "OPTIONS,PUT",
+    },
     body: JSON.stringify(newScore),
   };
 };

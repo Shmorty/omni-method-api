@@ -88,6 +88,8 @@ functions:
           method: get
   addScore:
     handler: src/handlers/users.addScore
+    url:
+      cors: true
     events:
       - httpApi:
           path: /users/{id}/scores
