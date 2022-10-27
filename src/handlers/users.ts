@@ -162,6 +162,7 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
       TableName: tableName,
       Item: {
         ...newScore,
+        type: "score",
         PK: `USER#${id}`,
         SK: `SCORE#${assessmentId}#${today}`,
       },

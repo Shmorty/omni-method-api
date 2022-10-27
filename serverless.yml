@@ -58,13 +58,16 @@ provider:
   environment:
     TABLE_NAME: { Ref: OmniMethodTable }
 
-# you can add packaging information here
-#package:
-#  patterns:
-#    - '!exclude-me.js'
-#    - '!exclude-me-dir/**'
-#    - include-me.js
-#    - include-me-dir/**
+  # you can add packaging information here
+  #package:
+  #  patterns:
+  #    - '!exclude-me.js'
+  #    - '!exclude-me-dir/**'
+  #    - include-me.js
+  #    - include-me-dir/**
+
+  httpApi:
+    cors: true
 
 functions:
   addUser:
