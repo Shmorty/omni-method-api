@@ -133,7 +133,7 @@ export const getUserScores = async (event: APIGatewayProxyEvent): Promise<APIGat
       user = element;
     } else if (element.type === "score") {
       delete element["type"];
-      scores.push(element);
+      scores.unshift(element);
     }
   });
   // send response
@@ -150,8 +150,8 @@ export const getUserScores = async (event: APIGatewayProxyEvent): Promise<APIGat
 export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const id = event.pathParameters?.id;
   const reqBody = JSON.parse(event.body as string);
-  const assessmentId = reqBody.assessmentId;
-  const today = new Date().toLocaleDateString(undefined, {});
+  const aid = reqBody.aid;
+  const scoreDate = reqBody.scoreDate;
   const newScore = {
     ...reqBody,
     calculatedScore: reqBody.rawScore * 2,
@@ -164,7 +164,7 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
         ...newScore,
         type: "score",
         PK: `USER#${id}`,
-        SK: `SCORE#${assessmentId}#${today}`,
+        SK: `SCORE#${aid}#${scoreDate}`,
       },
     })
     .promise();
