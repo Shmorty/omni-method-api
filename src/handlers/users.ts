@@ -151,7 +151,13 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
   const id = event.pathParameters?.id;
   const reqBody = JSON.parse(event.body as string);
   const aid = reqBody.aid;
-  const scoreDate = reqBody.scoreDate;
+  // format date
+  let d = new Date(reqBody.scoreDate);
+  let ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
+  let mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
+  let da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
+  const scoreDate = `${ye}-${mo}-${da}`;
+
   const newScore = {
     ...reqBody,
     calculatedScore: reqBody.rawScore * 2,
