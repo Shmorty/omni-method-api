@@ -6,6 +6,7 @@
       "firstName": "Jack",
       "lastName": "LaLanne",
       "nickname": "Jack",
+      "avatar": "assets/images/IMG_0626.jpg",
       "dob": "1914-09-26",
       "height": {
         "feet": 5,
