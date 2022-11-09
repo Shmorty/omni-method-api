@@ -121,19 +121,19 @@
       "cid": "FLEX",
       "aid": "14",
       "icon": "/assets/images/Toe_touch.png",
-      "label": "Posterior"
+      "label": "Pike"
     },
     {
       "cid": "FLEX",
       "aid": 15,
       "icon": "/assets/images/Wagon_Wheel.jpg",
-      "label": "Anterior"
+      "label": "Backbend"
     },
     {
       "cid": "FLEX",
       "aid": 16,
       "icon": "/assets/images/Medial.png",
-      "label": "Lateral"
+      "label": "Straddle"
     },
     {
       "cid": "META",
