@@ -22,7 +22,7 @@
     },
     {
       "cid": "META",
-      "label": "Metabolic",
+      "label": "Cardiorespiratory",
       "seq": 4
     },
     {
@@ -44,7 +44,7 @@
       "cid": "STRG",
       "aid": "BKSQ",
       "icon": "/assets/images/Back_squat.png",
-      "label": "Back Squat",
+      "label": "Squat",
       "units": "1RM (lbs)"
     },
     {
@@ -107,7 +107,7 @@
       "cid": "POWR",
       "aid": "PWCL",
       "icon": "/assets/images/Power_clean.png",
-      "label": "Power Clean",
+      "label": "Clean",
       "units": "1RM (lbs)"
     },
     {
@@ -151,7 +151,7 @@
       "cid": "META",
       "aid": 19,
       "icon": "/assets/images/Breath_hold.png",
-      "label": "CO2 Tolerance"
+      "label": "Static Apnea"
     },
     {
       "cid": "NEUR",
