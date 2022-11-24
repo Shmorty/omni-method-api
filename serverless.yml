@@ -11,11 +11,18 @@ org: shmorty
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
 frameworkVersion: "3"
+configValidationMode: error
+
+package:
+  patterns:
+    - "!src/data/**"
 
 provider:
   name: aws
   deploymentMethod: direct
   runtime: nodejs12.x
+  stage: ${opt:stage, 'uat'}
+
   # lambdaHashingVersion: 20201221
 
   # you can overwrite defaults here
@@ -66,9 +73,6 @@ provider:
   #    - '!exclude-me-dir/**'
   #    - include-me.js
   #    - include-me-dir/**
-  package:
-    patterns:
-      - "!src/data/**"
 
   httpApi:
     cors: true
