@@ -48,6 +48,7 @@
       "icon": "/assets/images/Back_squat.png",
       "label": "Squat",
       "units": "1RM (lbs)",
+      "description": "No supportive equipment (Weight lifting belt allowed). Must squat below parallel",
       "min": 0,
       "max": 800
     },
@@ -57,6 +58,7 @@
       "icon": "/assets/images/weighted_pull_up.jpg",
       "label": "Weighted Pull-up",
       "units": "1RM (lbs)",
+      "description": "No supportive equipment. Weight added below waist. No kipping. Must start in dead-hang position. Must pause in top position for 1 second. Bottom of chin must reach higher than the top of the bar.",
       "min": 0,
       "max": 500
     },
@@ -66,6 +68,7 @@
       "icon": "/assets/images/Bench_Press.jpg",
       "label": "Bench",
       "units": "1RM (lbs)",
+      "description": "No supportive equipment. Barbell must make contact with body in bottom position",
       "min": 0,
       "max": 600
     },
@@ -75,6 +78,7 @@
       "icon": "/assets/images/Back_squat.png",
       "label": "Squats",
       "units": "Reps",
+      "description": "No stopping movement at any point once the test has begun. Top of thighs must be below top of knees in bottom position. Knees must straighten in top position.",
       "min": 0,
       "max": 150
     },
@@ -84,6 +88,7 @@
       "icon": "/assets/images/Push_up.png",
       "label": "Pushups",
       "units": "Reps",
+      "description": "No stopping movement at any point once the test has begun. Top of elbows must be higher than top of the shoulders in bottom position. Arms must straighten in top position.",
       "min": 0,
       "max": 150
     },
@@ -93,6 +98,7 @@
       "icon": "/assets/images/pull_up.jpg",
       "label": "Pullups",
       "units": "Reps",
+      "description": "No stopping movement at any point once the test has begun. Arms must straighten in bottom position. Bottom of chin must reach higher than the top of the bar. No kipping.",
       "min": 0,
       "max": 49
     },
@@ -102,6 +108,7 @@
       "icon": "/assets/images/Long_Jump.jpg",
       "label": "Standing Long Jump",
       "units": "Length (in)",
+      "description": "Feet must move in tandem. Heel that is furthest back is measured.",
       "min": 0,
       "max": 147
     },
@@ -111,6 +118,7 @@
       "icon": "/assets/images/Push_Press.jpg",
       "label": "Push Press",
       "units": "lbs*ft",
+      "description": "No supportive equipment. No catch.",
       "min": 0,
       "max": 495
     },
@@ -120,6 +128,7 @@
       "icon": "/assets/images/Power_clean.png",
       "label": "Clean",
       "units": "1RM (lbs)",
+      "description": "No supportive equipment (Weight lifting belt allowed)",
       "min": 0,
       "max": 400
     },
@@ -129,6 +138,7 @@
       "icon": "/assets/images/100_meter_sprint.png",
       "label": "100 meter sprint",
       "units": "Time",
+      "description": "No starting blocks. No spikes.",
       "min": 9.58,
       "max": 22
     },
@@ -137,6 +147,7 @@
       "aid": "PIKE",
       "icon": "/assets/images/Toe_touch.png",
       "label": "Pike",
+      "description": "Position must be held for 30 seconds",
       "min": 0,
       "max": 10
     },
@@ -145,6 +156,7 @@
       "aid": "BKBN",
       "icon": "/assets/images/Wagon_Wheel.jpg",
       "label": "Backbend",
+      "description": "Position must be held for 5 seconds",
       "min": 0,
       "max": 10
     },
@@ -153,6 +165,7 @@
       "aid": "STRD",
       "icon": "/assets/images/Medial.png",
       "label": "Straddle",
+      "description": "Position must be held for 5 seconds",
       "min": 0,
       "max": 10
     },
@@ -161,6 +174,7 @@
       "aid": "TWOMDST",
       "icon": "/assets/images/2_minute_distance.png",
       "label": "2 minute distance",
+      "description": "Treadmill or track allowed",
       "min": 0,
       "max": 0.5
     },
@@ -169,6 +183,7 @@
       "aid": "ONEHRDST",
       "icon": "/assets/images/1_hour_distance.png",
       "label": "1 hour distance",
+      "description": "Road, treadmill, or track allowed",
       "min": 0,
       "max": 13.3
     },
@@ -177,6 +192,7 @@
       "aid": "STAPN",
       "icon": "/assets/images/Breath_hold.png",
       "label": "Static Apnea",
+      "description": "Time stops after inhale",
       "min": 0,
       "max": 11.5
     },
@@ -185,6 +201,7 @@
       "aid": "AGLTY",
       "icon": "/assets/images/Agility.jpg",
       "label": "Agility",
+      "description": "Must touch cone with hand. Order of cones must be followed. Feet cannot cross during the left and right cones.",
       "min": 20,
       "max": 70
     },
@@ -193,6 +210,7 @@
       "aid": "BLNC",
       "icon": "/assets/images/Balance.png",
       "label": "Balance",
+      "description": "(see each skill for specific rules)",
       "min": 0,
       "max": 10
     },
@@ -201,6 +219,7 @@
       "aid": "COORD",
       "icon": "/assets/images/Coordination.png",
       "label": "Coordination",
+      "description": "(see each skill for specific rules)",
       "min": 0,
       "max": 47
     }

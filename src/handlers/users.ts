@@ -212,7 +212,7 @@ const wrValues = {
   BKBN: 0,
   STRD: 0,
   TWOMDST: 0.5,
-  ONEHRDST: 13.3,
+  ONEHRDST: 13.25,
   STAPN: 11.5,
   AGLTY: 20,
   BLNC: 10,
