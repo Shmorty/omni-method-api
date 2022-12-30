@@ -261,9 +261,11 @@ async function calcScore(req: Score): Promise<number> {
       break;
     case "WTPU": // Weighted Pull-up
       await getBodyWeight(req.uid).then((bodyWeight) => {
-        // console.log("got body weight: " + bodyWeight.toString());
-        result = (req.rawScore + Number(bodyWeight) / wr) * 1000;
-        // console.log("set result " + result.toString());
+        console.log("rawScore " + req.rawScore.toString());
+        console.log("got body weight: " + bodyWeight.toString());
+        console.log("world record " + wr.toString());
+        result = ((req.rawScore + Number(bodyWeight)) / wr) * 1000;
+        console.log("set result " + result.toString());
       });
       break;
     case "PIKE": // Pike
