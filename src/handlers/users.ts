@@ -158,24 +158,25 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
   let mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
   let da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
   const scoreDate = `${ye}-${mo}-${da}`;
+  let newScore = {};
 
-  const newScore = {
-    ...reqBody,
-    // calculatedScore: reqBody.rawScore * 2,
-    calculatedScore: calcScore(reqBody),
-    // scoreDate: today,
-  };
-  await docClient
-    .put({
-      TableName: tableName,
-      Item: {
-        ...newScore,
-        type: "score",
-        PK: `USER#${id}`,
-        SK: `SCORE#${aid}#${scoreDate}`,
-      },
-    })
-    .promise();
+  await calcScore(reqBody).then(async (score) => {
+    newScore = {
+      ...reqBody,
+      calculatedScore: score,
+    };
+    await docClient
+      .put({
+        TableName: tableName,
+        Item: {
+          ...newScore,
+          type: "score",
+          PK: `USER#${id}`,
+          SK: `SCORE#${aid}#${scoreDate}`,
+        },
+      })
+      .promise();
+  });
 
   return {
     statusCode: 201,
@@ -219,12 +220,32 @@ const wrValues = {
   COORD: 47,
 };
 const WR = new Map(Object.entries(wrValues));
-function calcScore(req: Score) {
+
+async function getBodyWeight(id: string): Promise<number> {
+  let weight = 0;
+  var params = {
+    TableName: tableName,
+    Key: {
+      PK: `USER#${id}`,
+      SK: `#METADATA#${id}`,
+    },
+  };
+
+  const output = await docClient.get(params).promise();
+
+  if (output.Item) {
+    weight = output.Item.weight;
+  }
+
+  return weight;
+}
+
+async function calcScore(req: Score): Promise<number> {
   let wr = WR.get(req.aid) || 0;
+  let result = req.rawScore;
   switch (req.aid) {
     case "DLFT": // Deadlift
     case "BKSQ": // Squat
-    case "WTPU": // Weighted Pull-up
     case "BNCH": // Bench
     case "SQTS": // Squats
     case "PSHU": // Pushups
@@ -233,29 +254,40 @@ function calcScore(req: Score) {
     case "PSHP": // Push Press
     case "PWCL": // Clean
     case "STAPN": // Static Apnea
-      return Math.round((req.rawScore / wr) * 100000) / 100;
+      result = Math.round((req.rawScore / wr) * 100000) / 100;
+      break;
+    case "WTPU": // Weighted Pull-up
+      let bw = 0;
+      await getBodyWeight(req.uid).then((bodyWeight) => {
+        console.log("got body weight: " + bodyWeight);
+        // return Math.round(((req.rawScore + bodyWeight) / wr) * 100000) / 100;
+        result = Math.round(((req.rawScore + bodyWeight) / wr) * 100000) / 100;
+      });
+      // console.log("calculate weighted pull-up score");
+      // result = Math.round(((req.rawScore + bw) / wr) * 100000) / 100;
       break;
     case "PIKE": // Pike
     case "BKBN": // Backbend
     case "STRD": // Straddle
     case "BLNC": // Balance
     case "COORD": // Coordination
-      return req.rawScore * 100;
+      result = req.rawScore * 100;
       break;
     case "PSPR": // 100 meter sprint
-      return Math.round((Math.sqrt((req.rawScore - wr) / 0.1) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.125) * -1 + 10) * 10000) / 100;
       break;
     case "TWOMDST": // 2 minute distance
-      return Math.round((Math.sqrt((wr - req.rawScore) / 0.004) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.004) * -1 + 10) * 10000) / 100;
       break;
     case "ONEHRDST": // 1 hour distance
-      return Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
       break;
     case "AGLTY": // Agility
-      return Math.round((Math.sqrt((req.rawScore - wr) / 0.5) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.5) * -1 + 10) * 10000) / 100;
       break;
     default:
-      return req.rawScore;
+      // if falls through jusr return raw score
       break;
   }
+  return Promise.resolve(result);
 }
