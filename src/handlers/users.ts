@@ -160,7 +160,10 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
   const scoreDate = `${ye}-${mo}-${da}`;
   let newScore = {};
 
+  // console.log("addScore for user " + id);
+  // console.log(reqBody);
   await calcScore(reqBody).then(async (score) => {
+    // console.log("got calculated score " + score.toString());
     newScore = {
       ...reqBody,
       calculatedScore: score,
@@ -257,14 +260,11 @@ async function calcScore(req: Score): Promise<number> {
       result = Math.round((req.rawScore / wr) * 100000) / 100;
       break;
     case "WTPU": // Weighted Pull-up
-      let bw = 0;
       await getBodyWeight(req.uid).then((bodyWeight) => {
-        console.log("got body weight: " + bodyWeight);
-        // return Math.round(((req.rawScore + bodyWeight) / wr) * 100000) / 100;
-        result = Math.round(((req.rawScore + bodyWeight) / wr) * 100000) / 100;
+        // console.log("got body weight: " + bodyWeight.toString());
+        result = (req.rawScore + Number(bodyWeight) / wr) * 1000;
+        // console.log("set result " + result.toString());
       });
-      // console.log("calculate weighted pull-up score");
-      // result = Math.round(((req.rawScore + bw) / wr) * 100000) / 100;
       break;
     case "PIKE": // Pike
     case "BKBN": // Backbend
