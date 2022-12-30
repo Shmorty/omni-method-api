@@ -19,16 +19,17 @@ const tableName = "OmniMethodTable";
 
 export const addUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const reqBody = JSON.parse(event.body as string);
-  const userId = ulid();
+  // const userId = ulid();
+  const userId = reqBody.id;
   const newUser = {
     ...reqBody,
-    id: userId,
   };
   await docClient
     .put({
       TableName: tableName,
       Item: {
         ...newUser,
+        type: "user",
         PK: `USER#${userId}`,
         SK: `#METADATA#${userId}`,
       },
@@ -160,7 +161,8 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
 
   const newScore = {
     ...reqBody,
-    calculatedScore: reqBody.rawScore * 2,
+    // calculatedScore: reqBody.rawScore * 2,
+    calculatedScore: calcScore(reqBody),
     // scoreDate: today,
   };
   await docClient
@@ -185,3 +187,75 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
     body: JSON.stringify(newScore),
   };
 };
+
+interface Score {
+  uid: string;
+  aid: string;
+  scoreDate: string;
+  rawScore: number;
+  calculatedScore?: number;
+  notes?: string;
+}
+const wrValues = {
+  DLFT: 939,
+  BKSQ: 800,
+  WTPU: 500,
+  BNCH: 600,
+  SQTS: 150,
+  PSHU: 150,
+  PLUP: 49,
+  STLJ: 147,
+  PSHP: 495,
+  PWCL: 400,
+  PSPR: 9.58,
+  PIKE: 0,
+  BKBN: 0,
+  STRD: 0,
+  TWOMDST: 0.5,
+  ONEHRDST: 13.3,
+  STAPN: 11.5,
+  AGLTY: 20,
+  BLNC: 10,
+  COORD: 47,
+};
+const WR = new Map(Object.entries(wrValues));
+function calcScore(req: Score) {
+  let wr = WR.get(req.aid) || 0;
+  switch (req.aid) {
+    case "DLFT": // Deadlift
+    case "BKSQ": // Squat
+    case "WTPU": // Weighted Pull-up
+    case "BNCH": // Bench
+    case "SQTS": // Squats
+    case "PSHU": // Pushups
+    case "PLUP": // Pullups
+    case "STLJ": // Standing Long Jump
+    case "PSHP": // Push Press
+    case "PWCL": // Clean
+    case "STAPN": // Static Apnea
+      return Math.round((req.rawScore / wr) * 100000) / 100;
+      break;
+    case "PIKE": // Pike
+    case "BKBN": // Backbend
+    case "STRD": // Straddle
+    case "BLNC": // Balance
+    case "COORD": // Coordination
+      return req.rawScore * 100;
+      break;
+    case "PSPR": // 100 meter sprint
+      return Math.round((Math.sqrt((req.rawScore - wr) / 0.1) * -1 + 10) * 10000) / 100;
+      break;
+    case "TWOMDST": // 2 minute distance
+      return Math.round((Math.sqrt((wr - req.rawScore) / 0.004) * -1 + 10) * 10000) / 100;
+      break;
+    case "ONEHRDST": // 1 hour distance
+      return Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
+      break;
+    case "AGLTY": // Agility
+      return Math.round((Math.sqrt((req.rawScore - wr) / 0.5) * -1 + 10) * 10000) / 100;
+      break;
+    default:
+      return req.rawScore;
+      break;
+  }
+}
