@@ -218,7 +218,7 @@ const wrValues = {
   TWOMDST: 0.5,
   ONEHRDST: 13.25,
   STAPN: 11.5,
-  AGLTY: 20,
+  AGLTY: 12,
   BLNC: 10,
   COORD: 47,
 };
