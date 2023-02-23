@@ -192,6 +192,31 @@ export const addScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayP
   };
 };
 
+export const deleteScore = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+  const id = event.pathParameters?.id;
+  const reqBody = JSON.parse(event.body as string);
+  const aid = reqBody.aid;
+  const scoreDate = reqBody.scoreDate;
+
+  docClient.delete({
+    TableName: tableName,
+    Key: {
+      PK: `USER#${id}`,
+      SK: `SCORE#${aid}#${scoreDate}`,
+    },
+  });
+
+  return {
+    statusCode: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Methods": "OPTIONS,PUT",
+    },
+    body: "",
+  };
+};
+
 interface Score {
   uid: string;
   aid: string;
@@ -218,7 +243,7 @@ const wrValues = {
   TWOMDST: 0.5,
   ONEHRDST: 13.25,
   STAPN: 11.5,
-  AGLTY: 12,
+  AGLTY: 13,
   BLNC: 10,
   COORD: 47,
 };
@@ -285,7 +310,7 @@ async function calcScore(req: Score): Promise<number> {
       result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
       break;
     case "AGLTY": // Agility
-      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.5) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.25) * -1 + 10) * 10000) / 100;
       break;
     default:
       // if falls through jusr return raw score

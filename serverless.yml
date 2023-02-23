@@ -105,6 +105,14 @@ functions:
       - httpApi:
           path: /users/{id}/scores
           method: post
+  delScore:
+    handler: src/handlers/users.deleteScore
+    url:
+      cors: true
+    events:
+      - httpApi:
+          path: /users/{id}/scores
+          method: delete
   addCategory:
     handler: src/handlers/assessments.addCategory
     events:

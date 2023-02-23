@@ -202,10 +202,8 @@
       "icon": "/assets/images/agility.png",
       "label": "Agility",
       "description": "Must touch cone with hand. Order of cones must be followed. Feet cannot cross during the left and right cones.",
-      "min": 12,
-      "max": 35,
-      "old_min": 20,
-      "old_max": 70
+      "min": 13,
+      "max": 35
     },
     {
       "cid": "NEUR",
