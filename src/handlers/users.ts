@@ -304,7 +304,7 @@ async function calcScore(req: Score): Promise<number> {
       result = Math.round((Math.sqrt((req.rawScore - wr) / 0.125) * -1 + 10) * 10000) / 100;
       break;
     case "TWOMDST": // 2 minute distance
-      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.004) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.005) * -1 + 10) * 10000) / 100;
       break;
     case "ONEHRDST": // 1 hour distance
       result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
