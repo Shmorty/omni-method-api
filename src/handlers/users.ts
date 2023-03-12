@@ -197,14 +197,17 @@ export const deleteScore = async (event: APIGatewayProxyEvent): Promise<APIGatew
   const reqBody = JSON.parse(event.body as string);
   const aid = reqBody.aid;
   const scoreDate = reqBody.scoreDate;
+  console.log("deleteScore uid: " + id + " aid: " + aid + ", scoreDate: " + scoreDate);
 
-  docClient.delete({
-    TableName: tableName,
-    Key: {
-      PK: `USER#${id}`,
-      SK: `SCORE#${aid}#${scoreDate}`,
-    },
-  });
+  await docClient
+    .delete({
+      TableName: tableName,
+      Key: {
+        PK: `USER#${id}`,
+        SK: `SCORE#${aid}#${scoreDate}`,
+      },
+    })
+    .promise();
 
   return {
     statusCode: 204,
