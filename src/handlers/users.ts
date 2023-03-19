@@ -33,7 +33,7 @@ export const addUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
         PK: `USER#${userId}`,
         SK: `#METADATA#${userId}`,
       },
-      ConditionExpression: "attribute_not_exists(PK)",
+      // ConditionExpression: "attribute_not_exists(PK)",
     })
     .promise();
 
