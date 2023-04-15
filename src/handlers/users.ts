@@ -43,23 +43,24 @@ export const addUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
   };
 };
 
-export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-  const id = event.pathParameters?.id;
-
+export const getUsers = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   const output = await docClient
-    .get({
+    .scan({
       TableName: tableName,
-      Key: {
-        PK: `USER#${id}`,
-        SK: `#METADATA#${id}`,
+      FilterExpression: "#T = :userType",
+      ExpressionAttributeNames: {
+        "#T": "type",
+      },
+      ExpressionAttributeValues: {
+        ":userType": { S: "user" },
       },
     })
     .promise();
 
-  if (!output.Item) {
+  if (!output) {
     return {
       statusCode: 404,
-      body: JSON.stringify({ id: `${id}`, error: "not found" }),
+      body: JSON.stringify({ id: `users`, error: "not found" }),
     };
   }
   return {
@@ -68,7 +69,7 @@ export const getUser = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
     },
-    body: JSON.stringify(output.Item),
+    body: JSON.stringify(output),
   };
 };
 
@@ -285,7 +286,8 @@ async function calcScore(req: Score): Promise<number> {
     case "PSHP": // Push Press
     case "PWCL": // Clean
     case "STAPN": // Static Apnea
-      result = Math.round((req.rawScore / wr) * 100000) / 100;
+      // result = Math.round((req.rawScore / wr) * 100000) / 100;
+      result = Math.round((req.rawScore / wr) * 1000);
       break;
     case "WTPU": // Weighted Pull-up
       await getBodyWeight(req.uid).then((bodyWeight) => {
@@ -304,16 +306,20 @@ async function calcScore(req: Score): Promise<number> {
       result = req.rawScore * 100;
       break;
     case "PSPR": // 100 meter sprint
-      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.125) * -1 + 10) * 10000) / 100;
+      // result = Math.round((Math.sqrt((req.rawScore - wr) / 0.125) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.125) * -1 + 10) * 100);
       break;
     case "TWOMDST": // 2 minute distance
-      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.005) * -1 + 10) * 10000) / 100;
+      // result = Math.round((Math.sqrt((wr - req.rawScore) / 0.005) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.005) * -1 + 10) * 100);
       break;
     case "ONEHRDST": // 1 hour distance
-      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
+      // result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 100);
       break;
     case "AGLTY": // Agility
-      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.25) * -1 + 10) * 10000) / 100;
+      // result = Math.round((Math.sqrt((req.rawScore - wr) / 0.25) * -1 + 10) * 10000) / 100;
+      result = Math.round((Math.sqrt((req.rawScore - wr) / 0.25) * -1 + 10) * 100);
       break;
     default:
       // if falls through jusr return raw score

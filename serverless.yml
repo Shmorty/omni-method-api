@@ -78,8 +78,13 @@ provider:
     cors: true
 
 functions:
+  getUsers:
+    handler: src/handlers/users.getUsers
+    events:
+      - httpApi:
+          path: /users
+          method: get
   addUser:
-    # handler: src/handlers.addUser
     handler: src/handlers/users.addUser
     events:
       - httpApi:
