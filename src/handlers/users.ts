@@ -315,7 +315,11 @@ async function calcScore(req: Score): Promise<number> {
       break;
     case "ONEHRDST": // 1 hour distance
       // result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 10000) / 100;
-      result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 100);
+      if (req.rawScore < 5.0) {
+        result = Math.round((Math.sqrt((wr - req.rawScore) / 0.1325) * -1 + 10) * 100);
+      } else {
+        result = Math.round((req.rawScore / 13.25) * 1000);
+      }
       break;
     case "AGLTY": // Agility
       // result = Math.round((Math.sqrt((req.rawScore - wr) / 0.25) * -1 + 10) * 10000) / 100;
